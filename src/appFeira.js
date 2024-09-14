@@ -1,14 +1,16 @@
-import './utils/global.js'
 
-import 'dotenv/config.js';
+
+import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
+import visitaController from './controller/visitaController.js'
 
 const app = express();
 app.use(express.json());
 app.use(cors());      
 
-//utilizamos o rotas.js aqui.
+app.use(visitaController);
 
-const PORTA = process.env.PORTA;
-servidor.listen(PORTA, () => console.log(`--> Api subiu na porta ${PORTA}`))
+//utilizamos o rotas.js aqui.
+const PORTA = process.env.PORTA
+app.listen(PORTA, () => console.log(`--> Api subiu na porta ${PORTA}`))

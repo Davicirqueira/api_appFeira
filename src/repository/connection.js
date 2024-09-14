@@ -1,11 +1,15 @@
 import mysql from 'mysql2/promise';
 
-let conection = await mysql.createConnection({
+export let conection = await mysql.createConnection({
 
     host: process.env.MYSQL_HOST,
+    
     user: process.env.MYSQL_USER,
+    
     password: process.env.MYSQL_PWD,
+    
     database: process.env.MYSQL_DB,
+    
     
     typeCast: function (field, next) {
 
@@ -29,4 +33,4 @@ let conection = await mysql.createConnection({
 
 console.log('Conexão com BD realizada!')
 
-export default conection
+export default conection;
