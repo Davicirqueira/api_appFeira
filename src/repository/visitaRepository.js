@@ -1,20 +1,16 @@
 import conection from "./connection.js";
 
-//Aqui no caso a visita é um objeto com as 3 propriedades necessárias.
-
-export async function inserirVisita(visita){
-
-    let comando = `
-        insert into tb_visita (ds_qrcode, dt_visita, ds_sala)
-            values(?,?,?);
-    `
-
-    let r = await conection.query (comando, [visita.qrcode, visita.data, visita.sala]);
-    let info = r[0];
-
-    let idVisita = info.insertId;
-
-    return idVisita;
-
-}
+export const inserirVisita = async (qrcode) => {
+    try {
+      const { ds_qrcode, ds_sala, dt_visita } = qrcode;
+      const [result] = await conection.execute(
+        'INSERT INTO tb_visita (ds_qrcode, dt_visita, ds_sala) VALUES (?, ?, ?)',
+        [ds_qrcode, dt_visita, ds_sala]
+      );
+      return result.insertId; // Retorna o ID do registro inserido
+    } catch (error) {
+      console.error('Erro ao inserir visita no banco de dados:', error);
+      throw error; 
+    }
+  };
 

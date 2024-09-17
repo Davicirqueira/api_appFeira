@@ -3,11 +3,13 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import mysql from 'mysql2';
 import QRCodeReader from 'qrcode-reader';
+import conection from './src/repository/connection.js';
 import * as Jimp from 'jimp';
 import fs from 'fs';
 
 const app = express();
 app.use(bodyParser.json());
+
 
 // Conexão com o banco de dados
 const connection = mysql.createConnection({
@@ -47,6 +49,13 @@ app.post('/upload-qr', async (req, res) => {
         res.status(500).json({ message: 'Erro no servidor', error });
     }
 });
+
+
+app.use((req, res, next) => {
+    console.log(`Requisição recebida: ${req.method} ${req.url}`);
+    next();
+  });
+  
 
 // Iniciar o servidor
 const PORTA = process.env.PORTA ;
